@@ -1,44 +1,42 @@
-from caesar import rotate_string
+def alphabet_position(character):
+    alphabet = 'abcdefghijklmnopqrstuvwxyz'
+    lower = character.lower()
+    return alphabet.index(lower)
 
-app = Flask(__name__)
-app.config['DEBUG'] = True
+def rotate_string_13(text):
 
-form = """
-<!DOCTYPE html>
+    rotated = ''
+    alphabet = 'abcdefghijklmnopqrstuvwxyz'
 
-<html>
-   <head>
-       <style>
-           form {{
-               background-color: #eee;
-               padding: 20px;
-               margin: 0 auto;
-               width: 540px;
-               font: 16px sans-serif;
-               border-radius: 10px;
-           }}
-           textarea {{
-               margin: 10px 0;
-               width: 540px;
-               height: 120px;
-           }}
-       </style>
-   </head>
-   <body>
-   <form method='POST'>
-       <label>Rotate By:</label>
-       <input type="text" name="rot" value="0" />
-       <textarea name="text">{0}</textarea>
-       <input type="Submit" value="Submit Query" />
-    </form>
-   
-   </body>
-</html>
-"""
-           
+    for char in text:
+        rotated_idx = (alphabet_position(char) + 13) % 26
+        if char.isupper():
+            rotated = rotated + alphabet[rotated_idx].upper()
+        else:
+            rotated = rotated + alphabet[rotated_idx]
 
-@app.route("/")
-def index():
-    return form.format('')
+    return rotated
 
-app.run()
+def rotate_character(char, rot):
+    alphabet = 'abcdefghijklmnopqrstuvwxyz'
+    rotated_idx = (alphabet_position(char) + rot) % 26
+
+    if char.isupper():
+        return alphabet[rotated_idx].upper()
+    else:
+        return alphabet[rotated_idx]
+
+def rotate_string(text, rot):
+
+    rotated = ''
+
+    for char in text:
+        if (char.isalpha()):
+            rotated = rotated + rotate_character(char, rot)
+        else:
+            rotated = rotated + char
+
+    return rotated
+
+
+  
